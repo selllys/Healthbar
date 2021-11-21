@@ -28,7 +28,7 @@ public class Healthbar : MonoBehaviour
         _slider = GetComponent<Slider>();
     }
 
-    public void OnHealthChanged(float newPercent)
+    private void OnHealthChanged(float newPercent)
     {
         if (newPercent < 0 || newPercent > 1)
         {
