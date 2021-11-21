@@ -6,17 +6,29 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Slider))]
 public class Healthbar : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private float _changeDuration = 2f;
 
     private Slider _slider;
     private bool _isInitialized = false;
+    private Coroutine _activeCoroutine;
 
-    private void Start()
+    private void OnEnable()
+    {
+        _player.HealthPercentChanged += OnHealthChanged;
+    }
+
+    private void OnDisable()
+    {
+        _player.HealthPercentChanged -= OnHealthChanged;
+    }
+
+    private void Awake()
     {
         _slider = GetComponent<Slider>();
     }
 
-    public void HandleHealthPercentChanged(float newPercent)
+    public void OnHealthChanged(float newPercent)
     {
         if (newPercent < 0 || newPercent > 1)
         {
@@ -25,13 +37,21 @@ public class Healthbar : MonoBehaviour
 
         if (_isInitialized)
         {
-            StopAllCoroutines();
-            StartCoroutine(ChangeSliderValue(newPercent));
+            StopActiveCoroutine();
+            _activeCoroutine = StartCoroutine(ChangeSliderValue(newPercent));
         }
         else
         {
             _slider.value = newPercent;
             _isInitialized = true;
+        }
+    }
+
+    private void StopActiveCoroutine()
+    {
+        if (_activeCoroutine != null)
+        {
+            StopCoroutine(_activeCoroutine);
         }
     }
 

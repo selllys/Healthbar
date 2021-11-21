@@ -370,7 +370,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 835657642}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: ChangeHealthBy
+        m_MethodName: Heal
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -498,21 +498,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  OnHealthPercentChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1906380075}
-        m_TargetAssemblyTypeName: Healthbar, Assembly-CSharp
-        m_MethodName: HandleHealthPercentChanged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &909635696
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,12 +724,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 835657642}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: ChangeHealthBy
+        m_MethodName: TakeDamage
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: -10
+          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1221,6 +1206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e351810dc74d22846a5b966c94dce345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 835657642}
   _changeDuration: 2
 --- !u!1 &1989096194
 GameObject:
