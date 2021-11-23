@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,41 +9,29 @@ public class Healthbar : MonoBehaviour
     [SerializeField] private float _changeDuration = 2f;
 
     private Slider _slider;
-    private bool _isInitialized = false;
     private Coroutine _activeCoroutine;
 
     private void OnEnable()
     {
-        _player.HealthPercentChanged += OnHealthChanged;
+        _player.HealthChanged += OnHealthChanged;
     }
 
     private void OnDisable()
     {
-        _player.HealthPercentChanged -= OnHealthChanged;
+        _player.HealthChanged -= OnHealthChanged;
     }
 
-    private void Awake()
+    private void Start()
     {
         _slider = GetComponent<Slider>();
+        _slider.maxValue = _player.MaxHealth;
+        _slider.value = _player.Health;
     }
 
-    private void OnHealthChanged(float newPercent)
+    private void OnHealthChanged(float newValue)
     {
-        if (newPercent < 0 || newPercent > 1)
-        {
-            throw new ArgumentOutOfRangeException("percent");
-        }
-
-        if (_isInitialized)
-        {
-            StopActiveCoroutine();
-            _activeCoroutine = StartCoroutine(ChangeSliderValue(newPercent));
-        }
-        else
-        {
-            _slider.value = newPercent;
-            _isInitialized = true;
-        }
+        StopActiveCoroutine();
+        _activeCoroutine = StartCoroutine(ChangeSliderValue(newValue));
     }
 
     private void StopActiveCoroutine()

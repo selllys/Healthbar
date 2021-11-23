@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     private int _health;
 
-    public event UnityAction<float> HealthPercentChanged;
+    public event UnityAction<float> HealthChanged;
 
     private enum HealthChangeMode
     {
@@ -16,12 +16,13 @@ public class Player : MonoBehaviour
         Decrease
     }
 
-    public float HealthPercent => (float)_health / _maxHealth;
+    public int Health => _health;
 
-    private void Start()
+    public int MaxHealth => _maxHealth;
+
+    private void Awake()
     {
         _health = _maxHealth;
-        HealthPercentChanged?.Invoke(HealthPercent);
     }
 
     public void Heal(int amount)
@@ -47,6 +48,6 @@ public class Player : MonoBehaviour
         }
 
         _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
-        HealthPercentChanged?.Invoke(HealthPercent);
+        HealthChanged?.Invoke(_health);
     }
 }
